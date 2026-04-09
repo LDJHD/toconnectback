@@ -1,0 +1,17 @@
+{
+  "extends": "@adonisjs/tsconfig/tsconfig.app.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "./build",
+    "baseUrl": "./",
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "paths": {
+      "#models/*": ["app/models/*"],
+      "#services/*": ["app/services/*"],
+      "#validators/*": ["app/validators/*"],
+      "#controllers/*": ["app/controllers/*"]
+    }
+  },
+  "exclude": ["node_modules", "packages/**/*"]
+}
