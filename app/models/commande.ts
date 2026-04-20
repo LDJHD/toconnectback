@@ -20,7 +20,31 @@ export default class Commande extends BaseModel {
   declare utilisateurTelephone: string
 
   @column()
+  declare utilisateurId: number | null
+
+  @column()
   declare montantTotal: number
+
+  @column()
+  declare reductionPourcentage: number
+
+  @column()
+  declare reductionMontant: number
+
+  @column()
+  declare montantFinal: number
+
+  @column()
+  declare pointsSnapshot: number
+
+  @column()
+  declare pointsPartieEntiereSnapshot: number
+
+  @column()
+  declare reductionUsesRestants: number
+
+  @column()
+  declare statutClientSnapshot: string
 
   @column()
   declare statut: 'en_attente' | 'confirmee' | 'en_preparation' | 'livree' | 'annulee'

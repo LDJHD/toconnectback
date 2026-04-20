@@ -101,7 +101,9 @@ export default class VerificationsController {
 
     const verification = await Verification.create({
       ...payload,
-      expireA: DateTime.fromJSDate(new Date(payload.expireA)), // Gestion propre des dates
+      expireA: payload.expireA
+        ? DateTime.fromJSDate(new Date(payload.expireA))
+        : DateTime.now().plus({ minutes: 10 }),
     })
 
     return response.created(verification)

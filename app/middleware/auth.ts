@@ -11,12 +11,9 @@ export default class AuthMiddleware {
     }
 
     // Vérifier si le token existe et s'il est valide
-    const accessToken = await AccessToken.query()
-      .where('token', token)
-      .andWhere('expires_at', '>', DateTime.now()) // Vérifie si le token n'est pas expiré
-      .first()
+    const accessToken = await AccessToken.query().where('token', token).first()
 
-    if (!accessToken) {
+    if (!accessToken || !accessToken.expires_at || DateTime.now() > accessToken.expires_at) {
       return response.unauthorized({ error: 'Token invalide ou expiré.' })
     }
 

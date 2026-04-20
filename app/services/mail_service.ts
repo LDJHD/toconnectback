@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 export async function sendEmail(to: string, subject: string, html: string) {
   try {
     await transporter.sendMail({
-      from: `"TO CONNECT TV" <${env.get('GMAIL_USER')}>`,
+      from: `"TO CONNECT" <${env.get('GMAIL_USER')}>`,
       to,
       subject,
       html

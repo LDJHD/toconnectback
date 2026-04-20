@@ -6,6 +6,12 @@ interface CommandeInfo {
   utilisateurNom: string
   utilisateurTelephone: string
   montantTotal: number
+  montantFinal: number
+  reductionPourcentage: number
+  reductionMontant: number
+  statutClient: string
+  pointsSnapshot: number
+  reductionUsesRestants: number
   items: Array<{ nomArticle: string; quantite: number; prixUnitaire: number }>
 }
 
@@ -48,7 +54,19 @@ function formatOrderMessage(commande: CommandeInfo): string {
     message += `  • ${item.nomArticle} x${item.quantite} — ${item.prixUnitaire * item.quantite} FCFA\n`
   }
 
-  message += `\n💰 *Total:* ${commande.montantTotal} FCFA\n\n`
+  if (commande.statutClient === 'vip') {
+    message += `\n⭐ *Statut client:* VIP\n`
+  } else if (commande.reductionPourcentage > 0) {
+    message += `\n🎯 *Points:* ${commande.pointsSnapshot}\n`
+    message += `🏷️ *Reduction appliquee:* ${commande.reductionPourcentage}%\n`
+    message += `💸 *Montant reduction:* ${commande.reductionMontant} FCFA\n`
+    message += `🧾 *Total initial:* ${commande.montantTotal} FCFA\n`
+    message += `💰 *Total final:* ${commande.montantFinal} FCFA\n`
+    message += `🔁 *Usages restants au niveau:* ${commande.reductionUsesRestants}\n\n`
+  } else {
+    message += `\n💰 *Total:* ${commande.montantTotal} FCFA\n\n`
+  }
+
   message += `🔗 *Voir la commande:* ${generateOrderViewLink(commande.numero)}`
 
   return message
@@ -64,7 +82,20 @@ function formatCustomerOrderMessage(commande: CommandeInfo): string {
     message += `  • ${item.nomArticle} x${item.quantite} — ${item.prixUnitaire * item.quantite} FCFA\n`
   }
 
-  message += `\n💰 *Total:* ${commande.montantTotal} FCFA\n\n`
+  if (commande.statutClient === 'vip') {
+    message += `\n⭐ *Votre statut:* VIP\n`
+    message += `💰 *Total:* ${commande.montantTotal} FCFA\n\n`
+  } else if (commande.reductionPourcentage > 0) {
+    message += `\n🎯 *Vos points:* ${commande.pointsSnapshot}\n`
+    message += `🏷️ *Reduction appliquee:* ${commande.reductionPourcentage}%\n`
+    message += `🧾 *Total initial:* ${commande.montantTotal} FCFA\n`
+    message += `💸 *Reduction:* -${commande.reductionMontant} FCFA\n`
+    message += `💰 *Total a payer:* ${commande.montantFinal} FCFA\n`
+    message += `🔁 *Usages restants:* ${commande.reductionUsesRestants}\n\n`
+  } else {
+    message += `\n💰 *Total:* ${commande.montantTotal} FCFA\n\n`
+  }
+
   message += `🔗 *Lien commande:* ${generateOrderViewLink(commande.numero)}`
 
   return message

@@ -12,12 +12,10 @@ export default class CheckTokenValidity {
 
     const accessToken = await AccessToken.query().where('token', token).first()
 
-    if (!accessToken || DateTime.now() > accessToken.expires_at) {
+    if (!accessToken || !accessToken.expires_at || DateTime.now() > accessToken.expires_at) {
       return response.unauthorized({ error: 'Token invalide ou expiré.' })
     }
 
-    // Ajoute l'utilisateur lié au token à la requête
-    request.utilisateur = accessToken.utilisateur
     await next()
   }
 }

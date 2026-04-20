@@ -1,6 +1,5 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import Category from '#models/category'
-import SousCategory from '#models/sous_category'
 import Article from '#models/article'
 
 export default class ArticleSeeder extends BaseSeeder {

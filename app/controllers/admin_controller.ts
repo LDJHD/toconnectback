@@ -137,11 +137,11 @@ export default class AdminsController {
 
     await sendEmail(
       email,
-      'Reinitialisation mot de passe - TO CONNECT TV',
+      'Reinitialisation mot de passe - TO CONNECT',
       `
         <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 30px; background: #fff; border-radius: 12px; border: 1px solid #eee;">
           <div style="text-align: center; margin-bottom: 25px;">
-            <h2 style="color: #e50914; margin: 0;">TO CONNECT TV</h2>
+            <h2 style="color: #e50914; margin: 0;">TO CONNECT</h2>
             <p style="color: #999; font-size: 0.9rem;">Administration</p>
           </div>
           <p style="color: #333;">Bonjour,</p>

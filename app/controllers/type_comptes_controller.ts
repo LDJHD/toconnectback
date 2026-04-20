@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import app from '@adonisjs/core/services/app' // Correct import
-import { TypeCompteCreateValidator, TypeCompteUpdateValidator } from '#validators/typecompte'
+import { TypeCompteCreateValidator } from '#validators/typecompte'
 
 export default class TypesComptesController {
   async index({ response }: HttpContext) {
@@ -28,9 +28,13 @@ export default class TypesComptesController {
           name: path.basename(imagePath),
         })
       }
-  
-      data.image = imagePath || null
-      const typeCompte = await TypeCompte.create(data)
+
+      const payload = {
+        ...data,
+        image: imagePath || null,
+        composition: data.composition ?? '',
+      }
+      const typeCompte = await TypeCompte.create(payload)
       return response.created(typeCompte)
     } catch (error) {
       return response.badRequest({ message: error.messages || 'Erreur lors de la création du type de compte' })
@@ -52,8 +56,10 @@ export default class TypesComptesController {
       if (allData.prix) typeCompte.prix = Number(allData.prix)
       if (allData.nombreEcran) typeCompte.nombreEcran = Number(allData.nombreEcran)
       if (allData.plateforme) typeCompte.plateforme = allData.plateforme
-      if (allData.description) typeCompte.description = allData.description
-      if (allData.composition) typeCompte.composition = allData.composition
+      if (allData.description !== undefined) typeCompte.description = allData.description
+      if (allData.composition !== undefined && allData.composition !== null) {
+        typeCompte.composition = allData.composition
+      }
       
       const image = request.file('image', {
         extnames: ['jpg', 'jpeg', 'png'],

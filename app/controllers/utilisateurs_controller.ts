@@ -6,6 +6,7 @@ import { DateTime } from 'luxon'
 import { randomInt } from 'crypto'
 import { UtilisateurCreateValidator, UtilisateurUpdateValidator } from '../validators/utilisateur.js'
 import { sendEmail } from '../services/mail_service.js'
+import { getLoyaltySummary } from '#services/loyalty_service'
 
 export default class UtilisateursController {
   // Générer et envoyer un code de vérification
@@ -37,11 +38,11 @@ export default class UtilisateursController {
     // Envoyer le code par email
     await sendEmail(
       email,
-      'Votre code de connexion - TO CONNECT TV',
+      'Votre code de connexion - TO CONNECT',
       `
         <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 30px; background: #fff; border-radius: 12px; border: 1px solid #eee;">
           <div style="text-align: center; margin-bottom: 25px;">
-            <h2 style="color: #e50914; margin: 0;">TO CONNECT TV</h2>
+            <h2 style="color: #e50914; margin: 0;">TO CONNECT</h2>
             <p style="color: #999; font-size: 0.9rem;">Streaming & Boutique</p>
           </div>
           <p style="color: #333; font-size: 1rem;">Bonjour,</p>
@@ -107,5 +108,15 @@ export default class UtilisateursController {
     await utilisateur.delete()
 
     return response.ok({ message: 'Utilisateur supprimé avec succès' })
+  }
+
+  async loyaltySummary({ params, response }: HttpContext) {
+    const utilisateur = await Utilisateur.find(params.id)
+    if (!utilisateur) {
+      return response.notFound({ message: 'Utilisateur introuvable' })
+    }
+
+    const loyalty = await getLoyaltySummary(utilisateur)
+    return response.ok({ utilisateurId: utilisateur.id, ...loyalty })
   }
 }

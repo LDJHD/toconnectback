@@ -76,7 +76,7 @@ export default class PacksController {
       const data = await request.validateUsing(addPackItemValidator)
 
       const pack = await Pack.findOrFail(data.packId)
-      const article = await Article.findOrFail(data.articleId)
+      await Article.findOrFail(data.articleId)
 
       // Vérifier si l'article est déjà dans le pack
       const existing = await PackItem.query()

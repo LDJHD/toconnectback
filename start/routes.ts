@@ -14,6 +14,7 @@ import ArticlesController from '#controllers/articles_controller'
 import PaniersController from '#controllers/paniers_controller'
 import CommandesController from '#controllers/commandes_controller'
 import PacksController from '#controllers/packs_controller'
+import PromoCodesController from '#controllers/promo_codes_controller'
 import { middleware } from '#start/kernel'
 
 
@@ -144,6 +145,7 @@ router.delete('/type_comptes/delete/:id', (ctx) => new TypesComptesController().
 
 // Utilisateurs routes
 router.post('/utilisateurs/verifications', (ctx) => new UtilisateursController().requestVerificationCode(ctx))
+router.get('/utilisateurs/:id/loyalty-summary', (ctx) => new UtilisateursController().loyaltySummary(ctx))
 
 router.get('/utilisateurs', (ctx) => new UtilisateursController().index(ctx)).middleware(middleware.checktokenvalidity())
 
@@ -225,6 +227,12 @@ router.get('/packs/:id', (ctx) => new PacksController().show(ctx))
 router.put('/packs/update/:id', (ctx) => new PacksController().update(ctx))
 router.post('/packs/add-item', (ctx) => new PacksController().addItem(ctx))
 router.delete('/packs/remove-item/:itemId', (ctx) => new PacksController().removeItem(ctx))
+
+// Codes promo / points
+router.get('/promo-codes', (ctx) => new PromoCodesController().index(ctx)).middleware(middleware.checktokenvalidity())
+router.get('/promo-codes/history', (ctx) => new PromoCodesController().history(ctx)).middleware(middleware.checktokenvalidity())
+router.post('/promo-codes/create', (ctx) => new PromoCodesController().store(ctx)).middleware(middleware.checktokenvalidity())
+router.post('/promo-codes/redeem', (ctx) => new PromoCodesController().redeem(ctx))
 
 }).prefix('/api/v1')  // Applique le préfixe api/v1 à toutes les routes du groupe
 
