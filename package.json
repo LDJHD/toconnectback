@@ -14,8 +14,8 @@
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-  "node": "20.x"
-},
+    "node": "20.x"
+  },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
@@ -44,7 +44,7 @@
     "@japa/assert": "^4.0.1",
     "@japa/plugin-adonisjs": "^4.0.0",
     "@japa/runner": "^4.2.0",
-    "@swc/core": "1.10.7",
+    "@swc/core": "^1.15.32",
     "@types/luxon": "^3.4.2",
     "@types/node": "^18.19.3",
     "@types/node-cron": "^3.0.11",
@@ -72,7 +72,7 @@
     "mysql2": "^3.12.0",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.10.0",
-    "nodemailer-sendinblue-transport": "^2.0.1",
+    "nodemailer-brevo-transport": "^2.2.1",
     "pdfkit": "^0.16.0",
     "reflect-metadata": "^0.2.2",
     "sharp": "^0.33.5",
