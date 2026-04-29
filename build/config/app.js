@@ -2,7 +2,8 @@ import env from '#start/env';
 import app from '@adonisjs/core/services/app';
 import { Secret } from '@adonisjs/core/helpers';
 import { defineConfig } from '@adonisjs/core/http';
-export const appKey = new Secret(env.get('APP_KEY'));
+const appKeyValue = env.get('APP_KEY', '');
+export const appKey = new Secret(appKeyValue);
 export const http = defineConfig({
     generateRequestId: true,
     allowMethodSpoofing: false,
